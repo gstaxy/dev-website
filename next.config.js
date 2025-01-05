@@ -36,7 +36,7 @@ module.exports = withMDX({
   headers() {
     return [
       {
-        source: "/images/rauchg-3d4cecf.jpg",
+        source: "/images/black_hole_magnetic_field.jpg",
         headers: [
           {
             key: "cache-control",
@@ -54,8 +54,8 @@ module.exports = withMDX({
         permanent: true,
       },
       {
-        source: "/slackin/:nested*",
-        destination: "https://github.com/rauchg/slackin",
+        source: "/senators/:nested*",
+        destination: "https://www.nhl.com/senators/",
         permanent: true,
       },
     ];

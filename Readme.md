@@ -1,17 +1,16 @@
-# blog
-
-This is the blog that powers `rauchg.com`, built on
-[next.js](https://nextjs.org/) and
-deployed to the cloud via [Vercel](https://vercel.com).
+# dev-website
 
 ## How to run
 
 First, install [Vercel CLI](https://vercel.com/download).
 
+Add `.env` file to root
+
 ### Development
 
-```
-vc dev
+```bash
+> yarn install
+> vc dev
 ```
 
 ### Deployment
