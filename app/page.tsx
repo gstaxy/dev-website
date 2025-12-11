@@ -1,9 +1,5 @@
-import { Posts } from "./posts";
-import { getPosts } from "./get-posts";
+import AboutPage, { metadata } from "./about/page.mdx";
 
-export const revalidate = 60;
+export { metadata };
 
-export default async function Home() {
-  const posts = await getPosts();
-  return <Posts posts={posts} />;
-}
+export default AboutPage;

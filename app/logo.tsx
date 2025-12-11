@@ -4,9 +4,11 @@ import Link from "next/link";
 
 export function Logo() {
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   return (
     <span className="text-md md:text-lg whitespace-nowrap font-bold">
-      {pathname === "/" ? (
+      {isHomePage ? (
         <span className="cursor-default pr-2">Guillaume Slevan-Tremblay</span>
       ) : (
         <Link
