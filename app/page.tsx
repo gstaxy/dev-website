@@ -1,2 +1,4 @@
-export { metadata } from "./about/page.mdx";
-export { default as default } from "./about/page.mdx";
+import AboutPage, { metadata } from "./about/page.mdx";
+
+export { metadata };
+export default AboutPage;
