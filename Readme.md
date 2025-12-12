@@ -21,15 +21,13 @@ Add `.env` file to root
 vc
 ```
 
-This is the equivalent of submitting a PR with the [GitHub integration](https://vercel.com/github)
+This can also be triggered through a commit push to GitHub main branch.
 
 #### Production
 
 ```bash
 vc --prod
 ```
-
-This is the equivalent of `git push` to `master` (or merging a PR to master)
 
 ## Architecture
 
