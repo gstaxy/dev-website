@@ -49,6 +49,17 @@ export default function RootLayout({
             __html: `(${themeEffect.toString()})();`,
           }}
         />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YBZQG83XTT" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-YBZQG83XTT');
+            `,
+          }}
+        />
       </head>
 
       <body className="dark:text-gray-100 max-w-2xl m-auto min-h-screen flex flex-col">
