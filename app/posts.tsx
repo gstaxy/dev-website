@@ -13,7 +13,9 @@ export function Posts({ posts: initialPosts }) {
   const [sort, setSort] = useState<SortSetting>(["date", "desc"]);
   const { data: posts } = useSWR("/api/posts", fetcher, {
     fallbackData: initialPosts,
-    refreshInterval: 5000,
+    refreshInterval: 0, 
+    revalidateOnFocus: true,
+    revalidateOnReconnect: false,
   });
 
   function sortDate() {
