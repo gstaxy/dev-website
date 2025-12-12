@@ -1,63 +1,193 @@
+"use client";
+
+import { useState, type ReactNode } from "react";
 import { ThemeToggle } from "./theme-toggle";
 import { Logo } from "./logo";
 import Link from "next/link";
 
 export function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
-    <header className="flex mb-5 md:mb-10 items-center">
+    <header className="flex mb-5 md:mb-10 items-center relative">
       <Logo />
 
-      <nav className="font-mono text-xs grow justify-end items-center flex gap-2 md:gap-1">
-        <div className="flex items-center gap-3">
-          <ThemeToggle/>
+      <div className="ml-auto flex items-center gap-2">
+        <div className="flex items-center gap-3 md:gap-2">
+          <ThemeToggle />
         </div>
 
-        <Link
-          href="/blog"
-          className="inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] rounded-sm p-2 transition-[background-color]"
-        >
-          Blog
-        </Link>
+        <nav className="font-mono text-xs hidden md:flex justify-end items-center gap-2 md:gap-1">
+          <DesktopLinks />
+        </nav>
 
-        <Link
-          href="/cv"
-          className="inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] rounded-sm p-2 transition-[background-color]"
+        <button
+          type="button"
+          className="md:hidden inline-flex items-center justify-center p-2 rounded-sm hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424]"
+          aria-label="Toggle navigation"
+          onClick={() => setIsMenuOpen(open => !open)}
         >
-          CV
-        </Link>
+          <HamburgerIcon isOpen={isMenuOpen} />
+        </button>
+      </div>
 
-        <Link
-          href="/research"
-          className="inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] rounded-sm p-2 transition-[background-color]"
-        >
-          Research
-        </Link>
-
-        <a
-          href="https://x.com/slevanature/"
-          target="_blank"
-          className="inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] items-center p-2 rounded-sm transition-[background-color] whitespace-nowrap"
-        >
-          <XIcon/>
-        </a>
-
-        <a
-          href="https://www.linkedin.com/in/gslevantremblay/"
-          target="_blank"
-          className="inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] items-center p-2 rounded-sm transition-[background-color] whitespace-nowrap"
-        >
-          <LinkedInIcon/>
-        </a>
-
-        <a
-          href="https://www.github.com/gstaxy/"
-          target="_blank"
-          className="inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] items-center p-2 rounded-sm transition-[background-color] whitespace-nowrap"
-        >
-          <GitHubIcon/>
-        </a>
-      </nav>
+      {isMenuOpen ? (
+        <>
+          <button
+            aria-hidden="true"
+            className="fixed inset-0 z-10 md:hidden cursor-default"
+            onClick={closeMenu}
+            tabIndex={-1}
+          />
+          <div className="absolute right-0 top-full mt-2 z-20 md:hidden w-48 rounded-md border border-gray-200 dark:border-[#2f2f2f] bg-white dark:bg-[#121212] shadow-lg">
+            <nav className="flex flex-col font-mono text-sm p-2 gap-1">
+              <MobileLinks onNavigate={closeMenu} />
+            </nav>
+          </div>
+        </>
+      ) : null}
     </header>
+  );
+}
+
+function DesktopLinks() {
+  return (
+    <>
+      <InternalNavLink href="/blog" label="Blog" />
+      <InternalNavLink href="/cv" label="CV" />
+      <InternalNavLink href="/research" label="Research" />
+      <ExternalNavLink
+        href="https://x.com/slevanature/"
+        ariaLabel="X (Twitter)"
+      >
+        <XIcon />
+      </ExternalNavLink>
+      <ExternalNavLink
+        href="https://www.linkedin.com/in/gslevantremblay/"
+        ariaLabel="LinkedIn"
+      >
+        <LinkedInIcon />
+      </ExternalNavLink>
+      <ExternalNavLink href="https://www.github.com/gstaxy/" ariaLabel="GitHub">
+        <GitHubIcon />
+      </ExternalNavLink>
+    </>
+  );
+}
+
+function MobileLinks({ onNavigate }: { onNavigate: () => void }) {
+  return (
+    <>
+      <InternalNavLink href="/blog" label="Blog" variant="mobile" onClick={onNavigate} />
+      <InternalNavLink href="/cv" label="CV" variant="mobile" onClick={onNavigate} />
+      <InternalNavLink href="/research" label="Research" variant="mobile" onClick={onNavigate} />
+      <ExternalNavLink
+        href="https://x.com/slevanature/"
+        ariaLabel="X (Twitter)"
+        variant="mobile"
+        onClick={onNavigate}
+      >
+        <XIcon />
+      </ExternalNavLink>
+      <ExternalNavLink
+        href="https://www.linkedin.com/in/gslevantremblay/"
+        ariaLabel="LinkedIn"
+        variant="mobile"
+        onClick={onNavigate}
+      >
+        <LinkedInIcon />
+      </ExternalNavLink>
+      <ExternalNavLink
+        href="https://www.github.com/gstaxy/"
+        ariaLabel="GitHub"
+        variant="mobile"
+        onClick={onNavigate}
+      >
+        <GitHubIcon />
+      </ExternalNavLink>
+    </>
+  );
+}
+
+function InternalNavLink({
+  href,
+  label,
+  variant = "desktop",
+  onClick,
+}: {
+  href: string;
+  label: string;
+  variant?: "desktop" | "mobile";
+  onClick?: () => void;
+}) {
+  const baseClasses =
+    "inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] rounded-sm p-2 transition-[background-color]";
+  const mobileClasses = "w-full text-left";
+
+  return (
+    <Link
+      href={href}
+      className={`${baseClasses} ${variant === "mobile" ? mobileClasses : ""}`}
+      onClick={onClick}
+    >
+      {label}
+    </Link>
+  );
+}
+
+function ExternalNavLink({
+  href,
+  ariaLabel,
+  children,
+  variant = "desktop",
+  onClick,
+}: {
+  href: string;
+  ariaLabel: string;
+  children: ReactNode;
+  variant?: "desktop" | "mobile";
+  onClick?: () => void;
+}) {
+  const baseClasses =
+    "inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] items-center p-2 rounded-sm transition-[background-color] whitespace-nowrap";
+  const mobileClasses = "w-full justify-start gap-2";
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer noopener"
+      className={`${baseClasses} ${variant === "mobile" ? mobileClasses : ""}`}
+      aria-label={ariaLabel}
+      onClick={onClick}
+    >
+      {children}
+      {variant === "mobile" ? <span>{ariaLabel}</span> : null}
+    </a>
+  );
+}
+
+function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
+  return (
+    <span className="relative w-5 h-5">
+      <span
+        className={`absolute block h-0.5 w-full bg-current transition-transform duration-200 ${
+          isOpen ? "top-2.5 rotate-45" : "top-1"
+        }`}
+      />
+      <span
+        className={`absolute block h-0.5 w-full bg-current transition-opacity duration-200 top-2.5 ${
+          isOpen ? "opacity-0" : "opacity-100"
+        }`}
+      />
+      <span
+        className={`absolute block h-0.5 w-full bg-current transition-transform duration-200 ${
+          isOpen ? "top-2.5 -rotate-45" : "top-4"
+        }`}
+      />
+    </span>
   );
 }
 
