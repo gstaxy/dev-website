@@ -97,7 +97,10 @@ function List({ posts, sort }) {
 
         return (
           <li key={post.id}>
-            <Link href={`/${new Date(post.date).getFullYear()}/${post.id}`}>
+            <Link
+              href={`/${new Date(post.date).getFullYear()}/${post.id}`}
+              className="group"
+            >
               <span
                 className={`flex transition-[background-color] hover:bg-gray-100 dark:hover:bg-[#242424] active:bg-gray-200 dark:active:bg-[#222] border-y border-gray-200 dark:border-[#313131]
                 ${!firstOfYear ? "border-t-0" : ""}
@@ -115,7 +118,9 @@ function List({ posts, sort }) {
                     </span>
                   )}
 
-                  <span className="grow dark:text-gray-100">{post.title}</span>
+                  <span className="grow dark:text-gray-100 transition-colors group-hover:text-[#d6ab00]">
+                    {post.title}
+                  </span>
 
                   <span className="text-gray-500 dark:text-gray-500 text-xs">
                     {post.viewsFormatted}

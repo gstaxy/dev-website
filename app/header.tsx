@@ -123,7 +123,7 @@ function InternalNavLink({
   onClick?: () => void;
 }) {
   const baseClasses =
-    "inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] rounded-sm p-2 transition-[background-color]";
+    "inline-flex hover:text-[#d6ab00] active:bg-gray-300 dark:active:bg-[#242424] rounded-sm p-2 transition-colors";
   const mobileClasses = "w-full text-left";
 
   return (
@@ -151,7 +151,7 @@ function ExternalNavLink({
   onClick?: () => void;
 }) {
   const baseClasses =
-    "inline-flex hover:bg-gray-200 dark:hover:bg-[#313131] active:bg-gray-300 dark:active:bg-[#242424] items-center p-2 rounded-sm transition-[background-color] whitespace-nowrap";
+    "inline-flex hover:text-[#d6ab00] active:bg-gray-300 dark:active:bg-[#242424] items-center p-2 rounded-sm transition-colors whitespace-nowrap";
   const mobileClasses = "w-full justify-start gap-2";
 
   return (
